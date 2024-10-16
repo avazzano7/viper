@@ -1,4 +1,6 @@
 library(shiny)
+library(ape)
+library(seqinr)
 
 # Define UI
 ui <- fluidPage(
@@ -6,27 +8,41 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(
             fileInput("file", "Upload DNA Sequence (FASTA)", accept = c(".fasta")),
+            selectInput("method", "Choose Phylogenetic Method", choices = c("Neighbor Joining", "UPGMA")),
             actionButton("analyze", "Analyze Sequence")
         ),
         mainPanel(
             h3("Analysis Results"),
             textOutput("status"),
-            plotOutput("phylotree")
+            plotOutput("phyloTree"),  # Consistently use "phyloTree"
+            tableOutput("metrics")
         )
     )
 )
 
-
 # Define server logic
 server <- function(input, output) {
     observeEvent(input$analyze, {
-        # Placeholder for actual analysis logic
-        output$status <- renderText("Processing the uploaded file...")
+        req(input$file)
 
-        # Example: Display a phylogenetic tree placeholder
-        output$phyloTree <- renderPlot({
-            # Placeholder for tree plotting logic
-            plot(1:10, main = "Phylogenetic Tree Placeholder")
+        tryCatch({
+            # Read FASTA file
+            fasta_file <- read.fasta(input$file$datapath)
+            output$status <- renderText("File processed successfully.")
+
+            # Perform phylogenetic analysis
+            output$phyloTree <- renderPlot({
+                tree <- rtree(10)  # Example: random tree generation
+                plot(tree, main = "Phylogenetic Tree")
+            })
+
+            # Optionally calculate metrics and display them in a table
+            output$metrics <- renderTable({
+                # Replace with actual metrics computation
+                data.frame(Metric = c("Seq1", "Seq2"), Value = c(0.5, 0.7))
+            })
+        }, error = function(e) {
+            output$status <- renderText("Error processing the file: Invalid format or content.")
         })
     })
 }
