@@ -30,7 +30,12 @@ ui <- fluidPage(
             hr(),
             h4("Analysis Results"),
             textOutput("status"),
-            tableOutput("metrics")
+            tableOutput("metrics"),
+            
+            hr(),
+            h4("Settings"),
+            tags$label("Dark Mode:"),
+            tags$input(id = "dark_mode_toggle", type = "checkbox", onchange = "toggleDarkMode()")
         ),
         mainPanel(
             width = 9,
@@ -61,6 +66,7 @@ ui <- fluidPage(
 
     tags$head(
         tags$style(HTML("
+            /* Default (Light Mode) Styles */
             .custom-title {
                 margin-top: 20px;
             }
@@ -79,12 +85,61 @@ ui <- fluidPage(
                 background-color: #f8f9fa;
                 padding: 20px;
             }
+            .gc-table {
+                font-size: 10px; /* Adjust the font size as needed */
+            }
             .mainPanel {
                 padding: 20px;
             }
             h4 {
                 color: #343a40;
             }
+
+            /* Dark Mode Styles */
+            .dark-mode {
+                background-color: #121212 !important;
+                color: #ffffff !important;
+            }
+            .dark-mode .nav-tabs > li > a {
+                color: #1db954 !important;
+            }
+            .dark-mode .nav-tabs > li.active > a {
+                background-color: #1db954 !important;
+                color: white !important;
+            }
+            .dark-mode .btn-primary {
+                background-color #1db954 !important;
+                color: white;
+            }
+            .dark-mode .sidebarPanel {
+                background-color: #1e1e1e !important;
+            }
+            .dark-mode .well {
+                background-color: #1e1e1e !important;
+                color: white !important;
+            }
+            .dark-mode .mainPanel {
+                background-color: #181818 !important;
+            }
+            .dark-mode h4 {
+                color: #bbbbbb !important;
+            }
+        ")),
+
+        # JavaScript for Dark Mode Toggle
+        tags$script(HTML("
+            function toggleDarkMode() {
+                var body = document.body;
+                var isDark = body.classList.toggle('dark-mode');
+                localStorage.setItem('dark-mode', isDark);
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                if (localStorage.getItem('dark-mode') === 'true') {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('dark_mode_toggle').checked = true;
+                }
+            })
         "))
     )
 )
@@ -127,7 +182,7 @@ server <- function(input, output) {
             # Display lengths and GC content
             output$metrics <- renderTable({
                 data.frame(Sequence = names(fasta_file), Length = lengths, GC_Content = gc_content)
-            })
+            }, class = "gc-table")
 
             # Align the sequences
             seqs_bstring <- Biostrings::DNAStringSet(seqs)
