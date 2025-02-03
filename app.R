@@ -68,7 +68,7 @@ ui <- fluidPage(
                 color: #32CD32 !important;
             }
             .nav-tabs > li.active > a {
-                background-color: #32CD32 !important;
+                background-color: #228B22 !important;
                 color: white !important;
             }
             .btn-primary {
@@ -76,7 +76,7 @@ ui <- fluidPage(
                 color: white;
             }
             .sidebarPanel {
-                background-color: $f8f9fa;
+                background-color: #f8f9fa;
                 padding: 20px;
             }
             .mainPanel {
@@ -223,7 +223,7 @@ server <- function(input, output) {
     # Render the phylogenetic tree
     output$phylo_tree <- renderPlot({
         req(phylo_tree())  # Ensure tree exists before rendering
-        tip_labels <- paste("Strain:", seqnames)
+        tip_labels <- names(sequences())
         plot.phylo(phylo_tree(), main = "Phylogenetic Tree", tip.label = tip_labels, edge.width = 2)
     })
 }
