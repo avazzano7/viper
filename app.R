@@ -42,23 +42,45 @@ ui <- fluidPage(
                 # Tab 1: Phylogenetic Tree
                 tabPanel("Phylogenetic Tree",
                     fluidRow(
-                        column(12, plotOutput("phylo_tree"))
+                        column(12, h3("Phylogenetic Tree")),
+                        column(12, wellPanel(
+                            plotOutput("phylo_tree")
+                        ))
                     )
                 ),
                 # Tab 2: Mutation Heatmap
                 tabPanel("Mutation Heatmap",
                     fluidRow(
-                        column(12, plotOutput("mutation_heatmap"))
+                        column(12, h3("Mutation Heatmap")),
+                        column(12, wellPanel(
+                            plotOutput("mutation_heatmap")
+                        ))
                     )
                 ),
                 # Tab 3: Sequence Details
                 tabPanel("Sequence Details",
-                    textOutput("sequences"),
-                    tableOutput("metrics")
+                    fluidRow(
+                        column(12, h3("Extracted DNA Sequences")),
+                        column(12, wellPanel(
+                            verbatimTextOutput("sequences")
+                        ))
+                    ),
+                    hr(),
+                    fluidRow(
+                        column(12, h3("Sequence Metrics")),
+                        column(12, wellPanel(
+                            tableOutput("metrics")
+                        ))
+                    )
                 ),
                 # Tab 4: Codon Usage
                 tabPanel("Codon Usage",
-                    tableOutput("codon_usage")
+                    fluidRow(
+                        column(12, h3("Codon Usage Percentages")),
+                        column(12, wellPanel(
+                            tableOutput("codon_usage")
+                        ))
+                    )
                 ),
                 # Tab 5: Help
                 tabPanel("Help",
