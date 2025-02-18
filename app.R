@@ -30,7 +30,6 @@ ui <- fluidPage(
             hr(),
             h4("Analysis Results"),
             textOutput("status"),
-            tableOutput("metrics"),
             
             hr(),
             h4("Settings"),
@@ -54,15 +53,43 @@ ui <- fluidPage(
                 ),
                 # Tab 3: Sequence Details
                 tabPanel("Sequence Details",
-                    textOutput("sequences")
+                    textOutput("sequences"),
+                    tableOutput("metrics")
                 ),
-                # Tab 4: Genotype Identification
+                # Tab 4: Codon Usage
                 tabPanel("Codon Usage",
                     tableOutput("codon_usage")
+                ),
+                # Tab 5: Help
+                tabPanel("Help",
+                    fluidRow(
+                        column(12,
+                            h3("Application Overview"),
+                            p("This tool is designed for viral informatics and phylogenetic evolutionary analysis."),
+
+                            h3("Tab Descriptions"),
+                            
+                            h4("1. Phylogenetic Tree"),
+                            p("This tab generates a phylogenetic tree based on the uploaded DNA sequences. The tree visually represents evolutionary relationships among the sequences."),
+
+                            h4("2. Mutation Heatmap"),
+                            p("This tab provides a heatmap visualization of mutations. It compares sequences to a reference and highlights differences, helping to identify key mutations."),
+
+                            h4("3. Sequence Details"),
+                            p("Displays the extracted DNA sequences from the uploaded file and the G-C content of each sequence."),
+
+                            h4("4. Codon Usage"),
+                            p("Analyzes and displays the codon frequency across the sequences, helping to study genetic composition and expression patterns."),
+
+                            h3("Usage Instructions"),
+                            p("1. Upload a DNA sequence file in FASTA or FNA format."),
+                            p("2. Click the 'Read Sequence' button to process the file."),
+                            p("3. Navigate through the tabs to analyze phylogenetics, mutations, sequence details, and more.")
+                    )
                 )
             )
         )
-    ),
+    )),
 
     tags$head(
         tags$style(HTML("
