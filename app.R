@@ -11,7 +11,7 @@ ui <- fluidPage(
     titlePanel(
         fluidRow(
             column(2,
-                   img(src = "logo_no_background.png", height = "150px", width = "auto")
+                   img(src = "logo_no_background.png", height = "120px", width = "auto")
             ),
             column(9,
                    h1("Viral Informatics and Phylogenetic Evolutionary Resource",
