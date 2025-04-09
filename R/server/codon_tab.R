@@ -1,3 +1,4 @@
+
 all_codons <- c("AAA", "AAC", "AAG", "AAT", "ACA", "ACC", "ACG", "ACT",
                 "AGA", "AGC", "AGG", "AGT", "ATA", "ATC", "ATG", "ATT",
                 "CAA", "CAC", "CAG", "CAT", "CCA", "CCC", "CCG", "CCT",

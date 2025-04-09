@@ -78,10 +78,14 @@ ui <- fluidPage(
                 # Tab 4: Codon Usage
                 tabPanel("Codon Usage",
                     fluidRow(
-                        column(12, h3("Codon Usage Percentages")),
-                        column(12, wellPanel(
+                        column(12,
+                        h3("Codon Usage Percentages"),
+                        wellPanel(
+                            div(style = "overflow-x: auto;",
                             tableOutput("codon_usage")
-                        ))
+                            )
+                        )
+                        )
                     )
                 ),
                 # Tab 5: Help
