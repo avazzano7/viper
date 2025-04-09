@@ -3,7 +3,7 @@ ui <- fluidPage(
     titlePanel(
     fluidRow(
         column(2,
-            img(src = "logo_no_background.png", height = "120px", style = "margin-top: 10px;")
+            img(src = "logo.png", height = "120px", style = "margin-top: 10px;")
         ),
         column(10,
             tags$div(
