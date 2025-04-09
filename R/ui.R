@@ -3,9 +3,10 @@ ui <- fluidPage(
     titlePanel(
     fluidRow(
         column(10,
-            tags$div(
-                class = "app-title",
-                "Viral Informatics and Phylogenetic Evolutionary Resource"
+            tags$div(class = "viper-title",
+                span("VIPER", class = "viper-brand"),
+                br(),
+                span("Viral Informatics and Phylogenetic Evolutionary Resource", class = "viper-subtitle")
             )
         )
     )
@@ -202,15 +203,27 @@ ui <- fluidPage(
     tags$head(
         tags$style(HTML("
             /* Default (Light Mode) Styles */
-            .app-title {
-                margin-top: 30px;
-                margin-bottom: 20px;
-                font-size: 32px;
-                font-weight: bold;
-                color: #228B22;
-                letter-spacing: 1px;
+            .viper-title {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                text-align: left;
                 font-family: 'Segoe UI', sans-serif;
             }
+
+            .viper-brand {
+                font-size: 48px;
+                font-weight: 800;
+                color: #228B22;
+                letter-spacing: 2px;
+            }
+
+            .viper-subtitle {
+                font-size: 18px;
+                font-weight: 400;
+                color: #444;
+                letter-spacing: 1px;
+            }
+
             .nav-tabs > li > a {
                 color: #32CD32 !important;
             }
@@ -265,6 +278,12 @@ ui <- fluidPage(
             .dark-mode h4 {
                 color: #bbbbbb !important;
             }
+            .dark-mode .viper-brand {
+                color: #1db954;
+            }
+            .dark-mode .viper-subtitle {
+                color: #bbb;
+            }
 
             /* Blue Mode Overrides */
             .blue-mode .nav-tabs > li > a {
@@ -278,9 +297,12 @@ ui <- fluidPage(
                 background-color: #00BFFF !important;
                 color: white;
             }
-            .blue-mode h4,
-            .blue-mode .app-title {
+            .blue-mode .mainPanel h4,
+            .blue-mode .tab-content h4 {
                 color: #00BFFF !important;
+            }
+            .blue-mode .viper-brand {
+                color: #00BFFF;
             }
         ")),
 
