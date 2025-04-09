@@ -33,7 +33,15 @@ observeEvent(file_to_process(), {
     sequences(seqs)
 
     output$status <- renderText("File read successfully.")
-    output$sequences <- renderText(paste("Extracted Sequences:\n", paste(seqs, collapse = "\n")))
+    output$sequences <- renderText({
+        formatted <- paste0(
+            names(seqs),
+            ":\n",
+            seqs,
+            "\n\n"
+        )
+        paste("Extracted Sequences:\n\n", paste(formatted, collapse = ""))
+    })
 
     lengths <- nchar(seqs)
     gc_content <- sapply(seqs, function(seq) {
