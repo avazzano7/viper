@@ -22,6 +22,7 @@ ui <- fluidPage(
             hr(),
             h4("Analysis Results"),
             textOutput("status"),
+            textOutput("estimated_time"),
             
             hr(),
             h4("Settings"),
@@ -31,6 +32,15 @@ ui <- fluidPage(
         mainPanel(
             width = 9,
             tabsetPanel(
+                # Tab 0: Summary
+                tabPanel("Summary",
+                    fluidRow(
+                        column(12, h3("Sequence Summary")),
+                        column(12, wellPanel(
+                            uiOutput("summary_ui")
+                        ))
+                    )
+                ),
                 # Tab 1: Phylogenetic Tree
                 tabPanel("Phylogenetic Tree",
                     fluidRow(
