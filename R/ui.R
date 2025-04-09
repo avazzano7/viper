@@ -1,33 +1,61 @@
 # Define UI
 ui <- fluidPage(
     titlePanel(
-        fluidRow(
-            column(2,
-                   img(src = "logo_no_background.png", height = "120px", width = "auto")
-            ),
-            column(9,
-                   h1("Viral Informatics and Phylogenetic Evolutionary Resource",
-                   style = "margin-top: 50px;")
+    fluidRow(
+        column(2,
+            img(src = "logo_no_background.png", height = "120px", style = "margin-top: 10px;")
+        ),
+        column(10,
+            tags$div(
+                style = "
+                margin-top: 30px;
+                font-size: 32px;
+                font-weight: bold;
+                color: #228B22;
+                letter-spacing: 1px;
+                font-family: 'Segoe UI', sans-serif;
+                ",
+                "Viral Informatics and Phylogenetic Evolutionary Resource"
             )
         )
+    )
     ),
     
+
     sidebarLayout(
         sidebarPanel(
             width = 3,
-            tags$h4("Upload DNA Sequence"),
-            fileInput("file", "Choose DNA Sequence File (FASTA)", accept = c(".fasta", ".fna")),
-            actionButton("read", "Read Sequence", class = "btn-primary"),
+            style = "background-color: #f8f9fa; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 6px rgba(0,0,0,0.05);",
 
-            hr(),
-            h4("Analysis Results"),
-            textOutput("status"),
-            textOutput("estimated_time"),
-            
-            hr(),
-            h4("Settings"),
-            tags$label("Dark Mode:"),
-            tags$input(id = "dark_mode_toggle", type = "checkbox", onchange = "toggleDarkMode()")
+            # Section 1: Upload
+            tags$h4(icon("dna"), " Upload Viral Sequences"),
+            fileInput("file", label = NULL, accept = c(".fasta", ".fna")),
+            actionButton("read", "Read Sequence", class = "btn btn-success", style = "width: 100%; margin-bottom: 15px;"),
+
+            # Divider
+            tags$hr(),
+
+            # Section 2: Status / Analysis
+            tags$h4(icon("chart-line"), " Analysis Status"),
+            tags$div(
+                style = "margin-bottom: 10px; color: #2F7273;",
+                textOutput("status")
+            ),
+            tags$div(
+                style = "color: #555;",
+                textOutput("estimated_time")
+            ),
+
+            # Divider
+            tags$hr(),
+
+            # Section 3: Settings
+            tags$h4(icon("sliders-h"), " Settings"),
+            div(
+                style = "display: flex; align-items: center; gap: 10px;",
+                tags$label("Dark Mode:"),
+                tags$input(id = "dark_mode_toggle", type = "checkbox", onchange = "toggleDarkMode()")
+            )
         ),
         mainPanel(
             width = 9,
@@ -118,6 +146,12 @@ ui <- fluidPage(
             )
         )
     )),
+
+    tags$footer(
+        style = "text-align: center; margin-top: 40px; color: #888;",
+        "VIPER • © 2024"
+    ),
+
 
     tags$head(
         tags$style(HTML("
