@@ -2,19 +2,9 @@
 ui <- fluidPage(
     titlePanel(
     fluidRow(
-        column(2,
-            img(src = "logo.png", height = "120px", style = "margin-top: 10px;")
-        ),
         column(10,
             tags$div(
-                style = "
-                margin-top: 30px;
-                font-size: 32px;
-                font-weight: bold;
-                color: #228B22;
-                letter-spacing: 1px;
-                font-family: 'Segoe UI', sans-serif;
-                ",
+                class = "app-title",
                 "Viral Informatics and Phylogenetic Evolutionary Resource"
             )
         )
@@ -30,7 +20,7 @@ ui <- fluidPage(
             # Section 1: Upload
             tags$h4(icon("dna"), " Upload Viral Sequences"),
             fileInput("file", label = NULL, accept = c(".fasta", ".fna")),
-            actionButton("read", "Read Sequence", class = "btn btn-success", style = "width: 100%; margin-bottom: 15px;"),
+            actionButton("read", "Read Sequence", class = "btn-primary", style = "width: 100%; margin-bottom: 15px;"),
 
             # Divider
             tags$hr(),
@@ -55,11 +45,67 @@ ui <- fluidPage(
                 style = "display: flex; align-items: center; gap: 10px;",
                 tags$label("Dark Mode:"),
                 tags$input(id = "dark_mode_toggle", type = "checkbox", onchange = "toggleDarkMode()")
+            ),
+            div(
+                style = "display: flex; align-items: center; gap: 10px; margin-top: 10px;",
+                tags$label("Blue Mode:"),
+                tags$input(id = "blue_mode_toggle", type = "checkbox", onchange = "toggleBlueMode()")
             )
         ),
         mainPanel(
             width = 9,
             tabsetPanel(
+                id = "main_tabs",          # For tab control from server
+                selected = "Splash",       # Start on the splash screen tab
+
+                # 🔹 Splash Tab (displays gif)
+                tabPanel("Splash",
+                    fluidPage(
+                        tags$head(
+                            tags$style(HTML("
+                                #splash_container {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 80vh;
+                                    background-color: rgba(18, 18, 18, 0);
+                                }
+
+                                video {
+                                    max-width: 80%;
+                                    border-radius: 12px;
+                                    display: none;
+                                }
+
+                                /* Default: Dark Mode, No Blue */
+                                body.dark-mode:not(.blue-mode) #splash_dark {
+                                    display: block;
+                                }
+
+                                /* Light Mode, No Blue */
+                                body:not(.dark-mode):not(.blue-mode) #splash_light {
+                                    display: block;
+                                }
+
+                                /* Dark Mode + Blue Mode */
+                                body.dark-mode.blue-mode #splash_dark_blue {
+                                    display: block;
+                                }
+
+                                /* Light Mode + Blue Mode */
+                                body:not(.dark-mode).blue-mode #splash_light_blue {
+                                    display: block;
+                                }
+                            "))
+                        ),
+                        div(id = "splash_container",
+                            tags$video(id = "splash_dark", src = "splash_dark.mp4", autoplay = NA, muted = NA, loop = NA),
+                            tags$video(id = "splash_light", src = "splash_light.mp4", autoplay = NA, muted = NA, loop = NA),
+                            tags$video(id = "splash_dark_blue", src = "splash_dark_blue.mp4", autoplay = NA, muted = NA, loop = NA),
+                            tags$video(id = "splash_light_blue", src = "splash_light_blue.mp4", autoplay = NA, muted = NA, loop = NA)
+                        )
+                    )
+                ),
                 # Tab 0: Summary
                 tabPanel("Summary",
                     fluidRow(
@@ -156,8 +202,14 @@ ui <- fluidPage(
     tags$head(
         tags$style(HTML("
             /* Default (Light Mode) Styles */
-            .custom-title {
-                margin-top: 20px;
+            .app-title {
+                margin-top: 30px;
+                margin-bottom: 20px;
+                font-size: 32px;
+                font-weight: bold;
+                color: #228B22;
+                letter-spacing: 1px;
+                font-family: 'Segoe UI', sans-serif;
             }
             .nav-tabs > li > a {
                 color: #32CD32 !important;
@@ -213,6 +265,23 @@ ui <- fluidPage(
             .dark-mode h4 {
                 color: #bbbbbb !important;
             }
+
+            /* Blue Mode Overrides */
+            .blue-mode .nav-tabs > li > a {
+                color: #00BFFF !important;
+            }
+            .blue-mode .nav-tabs > li.active > a {
+                background-color: #1E90FF !important;
+                color: white !important;
+            }
+            .blue-mode .btn-primary {
+                background-color: #00BFFF !important;
+                color: white;
+            }
+            .blue-mode h4,
+            .blue-mode .app-title {
+                color: #00BFFF !important;
+            }
         ")),
 
         # JavaScript for Dark Mode Toggle
@@ -227,6 +296,19 @@ ui <- fluidPage(
                 if (localStorage.getItem('dark-mode') === 'true') {
                     document.body.classList.add('dark-mode');
                     document.getElementById('dark_mode_toggle').checked = true;
+                }
+            })
+
+            function toggleBlueMode() {
+                var body = document.body;
+                var isBlue = body.classList.toggle('blue-mode');
+                localStorage.setItem('blue-mode', isBlue);
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                if (localStorage.getItem('blue-mode') === 'true') {
+                    document.body.classList.add('blue-mode');
+                    document.getElementById('blue_mode_toggle').checked = true;
                 }
             })
         "))
