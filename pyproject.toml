@@ -8,7 +8,6 @@ version = "0.1.0"
 description = "VIPER: Viral Interpretation and Protein Evolution Reporter — mutation hotspot detection and functional impact annotation for viral genomes"
 readme = "README.md"
 requires-python = ">=3.8"
-license = { text = "MIT" }
 authors = [
     { name = "Your Name", email = "your.email@example.com" }
 ]
@@ -18,19 +17,14 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-
-[project.urls]
-Homepage = "https://github.com/yourusername/viper"
-Documentation = "https://github.com/yourusername/viper/wiki"
-Repository = "https://github.com/yourusername/viper"
-
-[project.dependencies]
-biopython = "^1.79"
-pandas = "^1.5"
-numpy = "^1.24"
-scipy = "^1.9"
-matplotlib = "^3.6"
-seaborn = "^0.12"
+dependencies = [
+    "biopython>=1.79",
+    "pandas>=1.5",
+    "numpy>=1.24",
+    "scipy>=1.9",
+    "matplotlib>=3.6",
+    "seaborn>=0.12"
+]
 
 [tool.setuptools.packages.find]
 where = ["viper"]
