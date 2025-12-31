@@ -1,4 +1,5 @@
 # VIPER
+<img src="viper_logo.png" width="200">
 
 **VIPER** — Viral Interpretation and Protein Evolution Resource — is a Python library designed to detect mutation hotspots in viral genomes and annotate their potential functional impacts on viral proteins.
 
