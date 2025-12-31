@@ -75,7 +75,7 @@ def detect_hotspots(mutation_density_df, density_threshold=None, percentile=95, 
     
     # Calculate percentile based on the threshold
     def get_percentile(density_value):
-        return (mutation_density_df['density'] < density_value).sum() / len(mutation_density_df) * 100
+        return (mutation_density_df['density'] <= density_value).sum() / len(mutation_density_df) * 100
     
     mutation_density_df['density_percentile'] = mutation_density_df['density'].apply(get_percentile)
 
