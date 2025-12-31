@@ -70,10 +70,14 @@ def detect_hotspots(mutation_density_df, density_threshold=None, percentile=95, 
     Returns:
     - pd.DataFrame filtered for windows considered hotspots.
     """
-    mutation_density_df['density_percentile'] = mutation_density_df['density'].rank(pct=True) * 100
-
     if density_threshold is None:
         density_threshold = np.percentile(mutation_density_df['density'], percentile)
+    
+    # Calculate percentile based on the threshold
+    def get_percentile(density_value):
+        return (mutation_density_df['density'] < density_value).sum() / len(mutation_density_df) * 100
+    
+    mutation_density_df['density_percentile'] = mutation_density_df['density'].apply(get_percentile)
 
     hotspots = mutation_density_df[mutation_density_df['density'] >= density_threshold].copy()
     hotspots.reset_index(drop=True, inplace=True)
