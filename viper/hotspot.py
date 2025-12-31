@@ -52,6 +52,7 @@ def sliding_window_mutation_density(mutations_df, genome_length, window_size=100
 
     if save_path:
         df.to_csv(save_path)
+        print(f"Mutation Density CSV saved at {save_path}")
 
     return df
 
@@ -76,5 +77,6 @@ def detect_hotspots(mutation_density_df, density_threshold=None, percentile=95, 
 
     if save_path:
         hotspots.to_csv(save_path)
+        print(f"Hotspot CSV saved at {save_path}")
 
     return hotspots

@@ -56,5 +56,6 @@ def plot_mutation_density(density_df, hotspots_df=None, genome_length=None, titl
     if save_path:
         plt.savefig(save_path, dpi=300)
         plt.close()
+        print(f"Hotspot Plot saved at {save_path}")
     else:
         plt.show()

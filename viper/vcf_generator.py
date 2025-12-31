@@ -75,3 +75,4 @@ def generate_vcf_from_alignment(ref_fasta, aligned_fasta, save_path):
 
             line = f"{chrom}\t{vcf_pos}\t{var_id}\t{ref_base}\t{alt_allele}\t{qual}\t{fltr}\t{info}\t{fmt}\t{sample_gts}\n"
             vcf.write(line)
+            print(f"Mutation VCF saved at {save_path}")
