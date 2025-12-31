@@ -18,7 +18,7 @@ def plot_mutation_density(density_df, hotspots_df=None, genome_length=None, titl
     plt.plot(
         density_df["window_midpoint"],
         density_df["density"],
-        label="Mutaiton Density",
+        label="Mutation Density",
         color="blue"
     )
 

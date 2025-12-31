@@ -3,7 +3,7 @@ import numpy as np
 from scipy.stats import poisson
 
 
-def sliding_window_mutation_density(mutations_df, genome_length, window_size=100, step_size=25):
+def sliding_window_mutation_density(mutations_df, genome_length, window_size=100, step_size=25, save_path=None):
     """
     Calculate mutation density across the genome using a sliding window.
 
@@ -48,11 +48,16 @@ def sliding_window_mutation_density(mutations_df, genome_length, window_size=100
             "density": density
         })
 
-    return pd.DataFrame(windows)
+    df = pd.DataFrame(windows)
+
+    if save_path:
+        df.to_csv(save_path)
+
+    return df
 
 
 
-def detect_hotspots(mutation_density_df, density_threshold=None, percentile=95):
+def detect_hotspots(mutation_density_df, density_threshold=None, percentile=95, save_path=None):
     """
     Identify mutation hotspots based on mutation density threshold or percentile.
 
@@ -68,4 +73,8 @@ def detect_hotspots(mutation_density_df, density_threshold=None, percentile=95):
         density_threshold = np.percentile(mutation_density_df['density'], percentile)
     hotspots = mutation_density_df[mutation_density_df['density'] >= density_threshold].copy()
     hotspots.reset_index(drop=True, inplace=True)
+
+    if save_path:
+        hotspots.to_csv(save_path)
+
     return hotspots

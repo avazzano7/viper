@@ -1,14 +1,14 @@
 from Bio import SeqIO
 import datetime
 
-def generate_vcf_from_alignment(ref_fasta, aligned_fasta, output_vcf):
+def generate_vcf_from_alignment(ref_fasta, aligned_fasta, save_path):
     """
     Generate a VCF file of SNPs from aligned viral sequences against a reference genome.
 
     Parameters:
     - ref_fasta (str): Path to the reference genome FASTA (single sequence).
     - aligned_fasta (str): Path to multi-FASTA file with sequences aligned to the reference.
-    - output_vcf (str): Path to write the output VCF file.
+    - save_path (str): Path to write the output VCF file.
     """
     # Load reference sequence (assumed single record)
     ref_record = next(SeqIO.parse(ref_fasta, "fasta"))
@@ -21,7 +21,7 @@ def generate_vcf_from_alignment(ref_fasta, aligned_fasta, output_vcf):
     samples = [rec.id for rec in aligned_records]
 
     # Open output VCF file
-    with open(output_vcf, 'w') as vcf:
+    with open(save_path, 'w') as vcf:
         # Write VCF header
         vcf.write("##fileformat=VCFv4.2\n")
         vcf.write(f"##fileDate={datetime.datetime.now().strftime('%Y%m%d')}\n")
