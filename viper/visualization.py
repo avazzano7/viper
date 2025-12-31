@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 
-def plot_mutation_density(density_df, hotspots_df=None, genome_length=None, title="Viral Mutation Hotspot Detection", figsize=(12, 4)):
+def plot_mutation_density(density_df, hotspots_df=None, genome_length=None, title="Viral Mutation Hotspot Detection", figsize=(12, 4), save_path=None):
     """
     Plot mutation density across the genome and highlight hotspots.
 
@@ -52,4 +52,9 @@ def plot_mutation_density(density_df, hotspots_df=None, genome_length=None, titl
     plt.legend()
     plt.xlim(0, genome_length if genome_length else density_df["window_midpoint"].max())
     plt.tight_layout()
-    plt.show()
+
+    if save_path:
+        plt.savefig(save_path, dpi=300)
+        plt.close()
+    else:
+        plt.show()
